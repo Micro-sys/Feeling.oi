@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<style type="text/css">
+body {
+	font-family: Arial;
+	font-size: 20px;
+	background-color: rgb(3, 1, 1);
+	background-image: url('hero.gif');
+	background-repeat: no-repeat;
+  	background-attachment: fixed; 
+	background-size: 100% 100%;
+}
+
+#container {
+	margin: 50px 0 0 0;
+	text-align: center;
+}
+
+#text {
+	display: inline-block;
+	color: #aab929;
+	border-right: 3px solid #d2f50e;
+}
+img {
+  display: inline-block;
+}
+.avatar {
+background-image: url(Nur.jpg);
+margin: 0;
+position: absolute;
+border: 5px solid rgb(7, 238, 18);
+width: 50px;
+height: 50px;
+border-radius: 50%;
+top: 80%;
+left: 50%;
+
+}
+
+</style>
+</head>
+
+<body>
+	<div id="container">
+	<div id="text"></div>
+</div>
+
+<script type="text/javascript">
+
+// List of sentences
+var _CONTENT = [ "Every love story is beautiful but ours is my favourite.",
+ "Nur You Are My Best Friends!", "Only you can give me that feeling.", "Love in Life ,Make the life beautiful.." ];
+
+// Current sentence being processed
+var _PART = 0;
+
+// Character number of the current sentence being processed 
+var _PART_INDEX = 0;
+
+// Holds the handle returned from setInterval
+var _INTERVAL_VAL;
+
+// Element that holds the text
+var _ELEMENT = document.querySelector("#text");
+
+// Implements typing effect
+function Type() { 
+	var text =  _CONTENT[_PART].substring(0, _PART_INDEX + 1);
+	_ELEMENT.innerHTML = text;
+	_PART_INDEX++;
+
+	// If full sentence has been displayed then start to delete the sentence after some time
+	if(text === _CONTENT[_PART]) {
+		clearInterval(_INTERVAL_VAL);
+		setTimeout(function() {
+			_INTERVAL_VAL = setInterval(Delete, 50);
+		}, 1000);
+	}
+}
+
+// Implements deleting effect
+function Delete() {
+	var text =  _CONTENT[_PART].substring(0, _PART_INDEX - 1);
+	_ELEMENT.innerHTML = text;
+	_PART_INDEX--;
+
+	// If sentence has been deleted then start to display the next sentence
+	if(text === '') {
+		clearInterval(_INTERVAL_VAL);
+
+		// If last sentence then display the first one, else move to the next
+		if(_PART == (_CONTENT.length - 1))
+			_PART = 0;
+		else
+			_PART++;
+		_PART_INDEX = 0;
+
+		// Start to display the next sentence after some time
+		setTimeout(function() {
+			_INTERVAL_VAL = setInterval(Type, 100);
+		}, 200);
+	}
+}
+
+// Start the typing effect on load
+_INTERVAL_VAL = setInterval(Type, 100);
+
+</script>
+
+</body> 
+<a href="2ndpage.html"><img src="avatar.jpeg" alt="Avatar" class="avatar"></a>
+</html>
+
